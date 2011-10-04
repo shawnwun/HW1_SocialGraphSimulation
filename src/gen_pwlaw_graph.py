@@ -41,6 +41,7 @@ def main (argv=None):
     while (pl_graph.number_of_nodes() > 0 and pl_graph.number_of_nodes() < 10000):    
         iteration += 1
         
+	print 'iteration',iteration
         '''THE BORN STEP'''        
         #randomly choose number of nodes to add
         num_nodes = pl_graph.number_of_nodes()
@@ -72,7 +73,7 @@ def main (argv=None):
 		nodes_dict[n]['age']+=1
 	
 	#TODO:Add edge
-	if(iteration%10==0 or pl_graph.number_of_nodes() >=10000 ):
+	if(pl_graph.number_of_nodes() >=8000 ):
 	    num_edges = pl_graph.number_of_edges()
 	    num_edges_to_reach = int( float(5) * float(num_nodes)/float(10000) * num_nodes )
 	    print num_edges, num_edges_to_reach, num_nodes
@@ -81,10 +82,17 @@ def main (argv=None):
 	    prob_cache = {}
 
 	    cache_id = 1
+
+	    global_nodes = []
 	    for node in pl_graph.nodes_iter():
-		for i in range(pl_graph.degree(node)):
-		    prob_cache[cache_id] = node
-		cache_id += 1
+		global_nodes.append((node,pl_graph.degree(node)))
+	    #print global_nodes
+	    global_nodes.sort(key=lambda x:x[1])
+	    #print global_nodes
+	    for node in global_nodes:
+		for i in range(node[1]):
+		    prob_cache[cache_id] = node[0]
+		    cache_id += 1
 	    #print all_degree, len(prob_cache)
 
 	    for i in range(num_edges,num_edges_to_reach): 
@@ -100,21 +108,43 @@ def main (argv=None):
 
 		# Form the Triangle
 		if prob <= neighbor_prob:
+		    local_idx = 0
 		    local_id = 1
 		    local_cache = {}
+		    sorted_nei_neighbors = []
 		    for neighbor in pl_graph.neighbors(node1):
 			for nei_neighbor in pl_graph.neighbors(neighbor):
-			    if pl_graph.has_edge(node1,nei_neighbor):
-				continue
-			    else:
-				for j in range(pl_graph.degree(nei_neighbor)):
-				    local_cache[local_id] = nei_neighbor
-				    local_id += 1
-		    randidx2 = random.randrange(0,len(local_cache)) + 1
+			    sorted_nei_neighbors.append((nei_neighbor,pl_graph.degree(nei_neighbor)))
+		    sorted_nei_neighbors.append((node1,pl_graph.degree(node1)))
+		    sorted_nei_neighbors.sort(key=lambda x:x[1])
+		    for nei_neighbor in sorted_nei_neighbors:
+			if pl_graph.has_edge(node1,nei_neighbor[0]):
+			    continue
+			elif node1 == nei_neighbor[0]:
+			    local_idx = local_id
+			else:
+			    for j in range(nei_neighbor[1]):
+				local_cache[local_id] = nei_neighbor[0]
+				local_id += 1
+		    beginidx = local_idx - int(float(len(local_cache))/4)
+		    endidx =   local_idx + int(float(len(local_cache))/4)
+		    if beginidx < 0:
+			beginidx =0
+		    if endidx > len(local_cache):
+			endidx = len(local_cache)
+		    randidx2 = random.randrange(beginidx,endidx) + 1
 		    node2 = local_cache[randidx2]
+		    all_degree += 2
 		# Add edge according to degree
 		else:
-		    randidx2 = int(random.uniform(0,1)*all_degree)
+		    beginidx = randidx1 - int(float(len(prob_cache))/4)
+		    endidx =   randidx1 + int(float(len(prob_cache))/4)
+		    if beginidx < 0:
+			beginidx =0
+		    if endidx > len(prob_cache):
+			endidx = len(prob_cache)
+		    
+		    randidx2 = random.randrange(beginidx,endidx) + 1
 		    if randidx2 <=0:
 			randidx2 = 1 
 		    elif randidx2 > len(prob_cache):
@@ -147,15 +177,20 @@ def main (argv=None):
             borned = 0;
             killed = 0;
 
-	if(iteration%10==0):
+	
+	if(iteration%10==0 or pl_graph.number_of_nodes() >= 8000 ):
+	    #eva.evaluation(pl_graph)
+	    nx.write_adjlist(pl_graph,"../graph/iter2/pl_modified2.adjlist.it"+str(iteration))
+	""" 
+	if pl_graph.number_of_nodes() >= 8000 : 
 	    eva.evaluation(pl_graph)
-	    nx.write_adjlist(pl_graph,"../graph/pl_modified.adjlist.it"+str(iteration))
-                
+	    nx.write_adjlist(pl_graph,"../graph/iter2/pl_modified2.adjlist.it"+str(iteration))
+	"""
     print (pl_graph.number_of_edges());
     print (pl_graph.number_of_nodes());
 
     
-    nx.write_adjlist(pl_graph,"../graph/pl_modified.adjlist")
+    nx.write_adjlist(pl_graph,"../graph/iter2/pl_modified2.adjlist")
 
     LifeTimeHistogram = {};
 

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "gen_pwlaw_graph.py", line 6, in <module>
+    import evaluation as eva
+  File "/home/shawn/Documents/HW1_SocialGraphSimulation/src/evaluation.py", line 19, in <module>
+    graph = nx.read_adjlist(sys.argv[1])
+IndexError: list index out of range

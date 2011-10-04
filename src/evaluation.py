@@ -13,7 +13,7 @@ def evaluation(graph):
     print "AVG_Shortest_Path: ", nx.algorithms.shortest_paths.generic.average_shortest_path_length(graph)
 #    print "Assortativity:     ", nx.algorithms.mixing.degree_assortativity(graph)
     print "Giant_Component:   ", tl.giant_CC(graph)
-#    print "Diameter:          ", nx.algorithms.distance_measures.diameter(graph)
+    print "Diameter:          ", nx.algorithms.distance_measures.diameter(graph)
     print "Densification:	  ", str(nx.number_of_nodes(graph)) + "	" + str(nx.number_of_edges(graph))
 
 #graph = nx.read_adjlist(sys.argv[1])

@@ -126,8 +126,8 @@ def main (argv=None):
 			    for j in range(nei_neighbor[1]):
 				local_cache[local_id] = nei_neighbor[0]
 				local_id += 1
-		    beginidx = local_idx - int(float(len(local_cache))/4)
-		    endidx =   local_idx + int(float(len(local_cache))/4)
+		    beginidx = local_idx - int(float(len(local_cache))/16)
+		    endidx =   local_idx + int(float(len(local_cache))/16)
 		    if beginidx < 0:
 			beginidx =0
 		    if endidx > len(local_cache):
@@ -137,8 +137,8 @@ def main (argv=None):
 		    all_degree += 2
 		# Add edge according to degree
 		else:
-		    beginidx = randidx1 - int(float(len(prob_cache))/4)
-		    endidx =   randidx1 + int(float(len(prob_cache))/4)
+		    beginidx = randidx1 - int(float(len(prob_cache))/16)
+		    endidx =   randidx1 + int(float(len(prob_cache))/16)
 		    if beginidx < 0:
 			beginidx =0
 		    if endidx > len(prob_cache):

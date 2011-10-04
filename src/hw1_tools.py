@@ -76,7 +76,7 @@ def giant_CC(G):
         for CC in CC_list:
                 if size < len(CC):
                         size=len(CC)
-        return size/number_of_nodes(G)
+        return float(size)/float(number_of_nodes(G))
 
 
 # Part 8: Densification power-law

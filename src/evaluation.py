@@ -1,7 +1,7 @@
 import networkx as nx
 import hw1_tools as tl
 import sys
-
+import os
 
 def evaluation(graph):
     print '---------------------------------'
@@ -15,7 +15,13 @@ def evaluation(graph):
     print "Giant_Component:   ", tl.giant_CC(graph)
     print "Diameter:          ", nx.algorithms.distance_measures.diameter(graph)
     print "Densification:	  ", str(nx.number_of_nodes(graph)) + "	" + str(nx.number_of_edges(graph))
+    print '--------------------------------'
+    print
 
-#graph = nx.read_adjlist(sys.argv[1])
-#evaluation(graph)
+for root, Dir, Files in os.walk(sys.argv[1]):
+    for f in Files:
+	filename = os.path.join(root,f)                                         
+	graph = nx.read_adjlist(filename)
+	print filename
+	evaluation(graph)
 

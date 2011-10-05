@@ -1,0 +1,14 @@
+#################
+Usage:
+    python gen_pwlaw_graph.py [ probability ] [ birth rate data ] [ death rate data ] [ output dir ]
+
+Evaluation:
+    python evaluation.py [ your graph ]
+
+Notes:
+    1.	Probability for our result is set to 0.8
+    2.	Birth rate data and death rate data must be in the exact format
+    3.	Output will contain many graphs which are labeled by the iteration
+	Will restore the result each 10 iteration, as well as the result whose total nodes exceeds 8000 
+	The life time distribution and age distribution will be shown at the very last of the generating program
+    4.	Evaluation results will be show by stdio

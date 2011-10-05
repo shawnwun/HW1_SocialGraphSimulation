@@ -6,6 +6,7 @@ import os
 def evaluation(graph):
     print '---------------------------------'
     histogram = nx.classes.function.degree_histogram(graph)
+    print '########## Histogram ############'
     for his in histogram:
 	print str(his) + "  ",
     print
@@ -18,10 +19,16 @@ def evaluation(graph):
     print '--------------------------------'
     print
 
+
+filename = sys.argv[1]
+graph = nx.read_adjlist(filename)
+evaluation(graph)
+
+"""
 for root, Dir, Files in os.walk(sys.argv[1]):
     for f in Files:
 	filename = os.path.join(root,f)                                         
 	graph = nx.read_adjlist(filename)
 	print filename
 	evaluation(graph)
-
+"""

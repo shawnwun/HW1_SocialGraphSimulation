@@ -208,7 +208,7 @@ def main (argv=None):
     for key in LifeTimeHistogram.keys():
 	LifeTimeHistogram[key] = float(LifeTimeHistogram[key])/float(nol)   
 
-    #print LifeTimeHistogram 
+    print LifeTimeHistogram 
     print "life time";
     for key, value in LifeTimeHistogram.iteritems():
 	print value, '	',
